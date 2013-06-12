@@ -1,0 +1,21 @@
+{
+  "version": "0.0.1",
+  "name": "npm",
+  "description": "track mouse cursor from multiple clients",
+  "author": "Scott Pierce",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ddrscott/live_cursor"
+  },
+  "bugs": {
+    "email": "npm-@googlegroups.com",
+    "url": "http://github.com/ddrscott/live_cursor/issues"
+  },
+  "dependencies": {
+    "express": "3.x",
+    "socket.io": "0"
+  },
+  "scripts": {
+    "start": "node ./server.js"
+  }
+}
