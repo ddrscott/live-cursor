@@ -1,13 +1,30 @@
 <html>
 <head>
     <title>Live Cursor</title>
-    
 </head>
 <body>
+    <h3>Bookmarklet (https://cursory-ddrscott.rhcloud.com)</h3>
+    <a href="javascript:var%20e=document.createElement('script');e.type='text/javascript';e.setAttribute('data-main','http://cursory-ddrscott.rhcloud.com/client.js');e.src='http://cursory-ddrscott.rhcloud.com/require-min.js';document.getElementsByTagName('body')[0].appendChild(e);">Live Cursor</a>
 
-    <h3>Bookmarklet, only works for non-ssl sites</h3>
-    <a href="javascript:var%20e=document.createElement('script');e.type='text/javascript';e.setAttribute('data-main','http://live_cursor.ddrscott.c9.io/client.js');e.src='http://live_cursor.ddrscott.c9.io/require-min.js';document.getElementsByTagName('body')[0].appendChild(e);">Live Cursor</a>
+    <h3>Bookmarklet (https://cursory-ddrscott.rhcloud.com)</h3>
+    <a href="javascript:var%20e=document.createElement('script');e.type='text/javascript';e.setAttribute('data-main','https://cursory-ddrscott.rhcloud.com/client.js');e.src='https://cursory-ddrscott.rhcloud.com/require-min.js';document.getElementsByTagName('body')[0].appendChild(e);">Live Cursor</a>
 
-    <script data-main="http://live_cursor.ddrscott.c9.io/client.js" src="http://live_cursor.ddrscott.c9.io/require-min.js"></script>
+    <h3>Javascript Snippet</h3>
+    <pre>
+   &lt;script type="text/javascript" data-main=&quot;//cursory-ddrscott.rhcloud.com/client.js&quot; src=&quot;//cursory-ddrscott.rhcloud.com/require-min.js&quot;&gt;&lt;/script&gt;
+    </pre>
+
+    <h3>Javascript Injection</h3>
+    <pre>
+    &lt;script type="text/javascript"&gt;
+        var e=document.createElement("script");
+        e.type="text/javascript";
+        e.setAttribute("data-main","//cursory-ddrscott.rhcloud.com/client.js");
+        e.src="//cursory-ddrscott.rhcloud.com/require-min.js";
+        document.getElementsByTagName("body")[0].appendChild(e);
+    &lt;/script&gt;
+    </pre>
+    
+    <script type='text/javascript' data-main="/client.js" src="/require-min.js"></script>
 </body>
 </html>
