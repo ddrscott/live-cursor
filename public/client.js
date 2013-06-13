@@ -1,3 +1,5 @@
+var _WS_HOST = null;
+
 // Require.js allows us to configure shortcut alias
 require.config({
   // The shim config allows us to configure dependencies for
@@ -12,7 +14,7 @@ require.config({
   },
   paths: {
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min',
-    socketio: '/socket.io/socket.io',
+    socketio: (_WS_HOST ? '//' + _WS_HOST : '') + '/socket.io/socket.io',
     underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min'
   }
 });
@@ -23,7 +25,7 @@ define([
   'socketio'
 ], function( $, _, io ) {
  
-    var socket = io.connect(); // 'http://live_cursor.ddrscott.c9.io/'
+    var socket = _WS_HOST ? io.connect('//' + _WS_HOST) : io.connect(); // 'http://live_cursor.ddrscott.c9.io/'
     
     var clients = {};
     
