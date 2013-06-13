@@ -5,28 +5,29 @@ require.config({
   shim: {
     'socketio': {
       exports: 'io'
+    },
+    'underscore': {
+      exports: '_'
     }
   },
   paths: {
-    jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min',
-    socketio: 'http://live_cursor.ddrscott.c9.io/socket.io/socket.io'
+    jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min',
+    socketio: '/socket.io/socket.io',
+    underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min'
   }
 });
  
 define([
   'jquery',
+  'underscore',
   'socketio'
-], function( $, io ) {
+], function( $, _, io ) {
  
-    var socket = io.connect('http://live_cursor.ddrscott.c9.io/');
-    
-    $(window).mousemove(function(e) {
-        socket.emit('move', {x: e.pageX, y:e.pageY});
-    });
+    var socket = io.connect(); // 'http://live_cursor.ddrscott.c9.io/'
     
     var clients = {};
     
-    socket.on('move', function (data) {
+    socket.on('move', _.throttle(function(data) {
     
         var client_key = "client-" + data.from;
         var coord = $("#" + client_key);
@@ -45,10 +46,17 @@ define([
         
         // move the element
         coord.css({left: data.x, top: data.y});
-    });
-    
+    }, 10));
+
+    $('html, body').css({cursor: "wait"});
+
     socket.on('myself', function (data) {
-        $('body, a, a:hover').css({cursor: "url('" + data.cursor + "'), auto"});
+        $('html, body').css({cursor: "url('" + data.cursor + "'), auto"});
+    
+        // don't register move handler till server responds
+        $(document).mousemove(function(e) {
+            socket.emit('move', {x: e.pageX, y:e.pageY});
+        });
     });
     
     
