@@ -18,7 +18,7 @@ app.configure(function(){
 io.configure(function() {
     io.enable('browser client minification');
     io.enable('browser client gzip');
-    io.set('transports', ['websocket', 'flashsocket']);
+    // io.set('transports', ['websocket', 'flashsocket']);
 });
 
 var clients = {};
