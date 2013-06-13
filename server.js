@@ -5,7 +5,10 @@ var express = require('express'),
   
 var cursors = require('./cursors.js');
 
-server.listen(process.env.PORT, process.env.IP);
+var ipaddr  = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "127.0.0.1";
+var port    = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080;
+
+server.listen(port, ipaddr);
 
 app.configure(function(){
     // app.use(express.logger());
