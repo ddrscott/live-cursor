@@ -28,7 +28,9 @@ define([
     var socket = _WS_HOST ? io.connect('//' + _WS_HOST) : io.connect(); // 'http://live_cursor.ddrscott.c9.io/'
     
     var clients = {};
-    
+
+    socket.emit('join', {room: document.URL});
+
     socket.on('move', _.throttle(function(data) {
     
         var client_key = "client-" + data.from;

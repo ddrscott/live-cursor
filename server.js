@@ -22,27 +22,37 @@ io.configure(function() {
 });
 
 var clients = {};
+var sites = {};
 
 io.sockets.on('connection', function (socket) {
 
-    var myself = {
-        cursor: cursors.nextCursor()
-    };
-    clients[socket.id] = myself;
+    socket.on('join', function(data) {
+        console.log("socket: " + socket.id + " received: " + data);
+        
+        var myself = {
+            cursor: cursors.nextCursor()
+        };
+        clients[socket.id] = myself;
+        sites[socket.id] = data.room;
+        
+        socket.join(data.room);
 
-    io.sockets.emit('clients', clients);
+        socket.emit('myself', myself);
+        
+        io.sockets.in(data.room).emit('clients', clients);
+    });
 
-    socket.emit('myself', myself);
-  
     socket.on('move', function(data) {
         //console.log("socket: " + socket.id + " received: " + data);
+        var room = sites[socket.id];
         data.from = socket.id;
-        socket.broadcast.emit('move', data);
+        io.sockets.in(room).except(socket.id).emit('move', data);
     });
     
     socket.on('disconnect', function () {
+        var room = sites[socket.id];
         delete clients[socket.id];
-        socket.broadcast.emit('disconnect', socket.id);
-        io.sockets.emit('clients', clients);
+        io.sockets.in(room).except(socket.id).emit('disconnect', socket.id);
+        io.sockets.in(room).except(socket.id).emit('clients', clients);
     });    
 });
